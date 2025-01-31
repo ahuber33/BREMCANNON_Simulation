@@ -1,0 +1,49 @@
+import os
+import shutil
+
+def remplacer_ligne_et_renommer(dossier, ligne_a_remplacer, nouvelle_ligne, ancien_motif, nouveau_motif):
+    """
+    Remplace une ligne spécifique dans tous les fichiers d'un dossier et les renomme.
+
+    :param dossier: Dossier contenant les fichiers à modifier.
+    :param ligne_a_remplacer: Texte de la ligne à remplacer.
+    :param nouvelle_ligne: Texte de remplacement.
+    :param ancien_motif: Motif à remplacer dans le nom des fichiers.
+    :param nouveau_motif: Nouveau motif pour renommer les fichiers.
+    """
+    for fichier in os.listdir(dossier):
+        chemin_fichier = os.path.join(dossier, fichier)
+
+        # Vérifier si c'est un fichier
+        if os.path.isfile(chemin_fichier):
+            # Créer une copie de sauvegarde avant modification
+            shutil.copy(chemin_fichier, chemin_fichier + ".bak")
+
+            # Lire et modifier le fichier
+            with open(chemin_fichier, 'r', encoding='utf-8') as f:
+                lignes = f.readlines()
+
+            # Modifier la ligne cible
+            lignes = [nouvelle_ligne + "\n" if ligne.strip() == ligne_a_remplacer else ligne for ligne in lignes]
+
+            # Écrire les modifications dans le fichier
+            with open(chemin_fichier, 'w', encoding='utf-8') as f:
+                f.writelines(lignes)
+
+            # Renommer le fichier s'il contient l'ancien motif
+            if ancien_motif in fichier:
+                nouveau_nom = fichier.replace(ancien_motif, nouveau_motif)
+                os.rename(chemin_fichier, os.path.join(dossier, nouveau_nom))
+                print(f"Fichier renommé : {fichier} -> {nouveau_nom}")
+
+    print("Modification terminée.")
+
+# Exemple d'utilisation
+dossier_cible = "/data/BREMCANNON_Simulation/"  # Modifier avec le chemin réel
+remplacer_ligne_et_renommer(
+    dossier=dossier_cible,
+    ligne_a_remplacer="Ancienne ligne de texte",
+    nouvelle_ligne="Nouvelle ligne de texte",
+    ancien_motif="ancien",
+    nouveau_motif="nouveau"
+)
