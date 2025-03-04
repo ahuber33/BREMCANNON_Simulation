@@ -44,15 +44,15 @@
 #/gps/pos/halfz 1.5 mm
 #/gps/ang/type iso
 
-/gps/ene/type Arb
-/gps/hist/type arb
-/gps/hist/file Data_Exp_100_20_60.txt
-/gps/hist/inter Lin
+#/gps/ene/type Arb
+#/gps/hist/type arb
+#/gps/hist/file Data_Exp_100_20_60.txt
+#/gps/hist/inter Lin
 
 #/gps/ene/type Exp
 #/gps/ene/min 1. keV
-#/gps/ene/max 10. MeV
-#/gps/ene/ezero 0.1 MeV #Obligation to be in MeV
+#/gps/ene/max 5000. keV
+#/gps/ene/ezero 1 MeV
 
 
 #/gps/ene/type Lin
@@ -62,10 +62,10 @@
 #/gps/ene/intercept 1
 
 
-#/gps/ene/type Arb
-#/gps/hist/type arb
-#/gps/hist/file Spectre_scan08_1.txt
-#/gps/hist/inter Lin
+/gps/ene/type Arb
+/gps/hist/type arb
+/gps/hist/file spectra/spectrum_6.txt
+/gps/hist/inter Exp
 
 #/gps/particle ion
 #/gps/ion 11 22 0 0  

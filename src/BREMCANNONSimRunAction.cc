@@ -42,6 +42,10 @@ void BREMCANNONSimRunAction::CreateROOTFile(G4String suffixe)
   // RunBranch = IP->Branch("EBremCreation", "vector<float>", &Stats.EBremCreation);
   // RunBranch = IP->Branch("EBremExit", "vector<float>", &Stats.EBremExit);
 
+  hist = new TH1D("incident_energy", "incident_energy", 500, 0, 5000);
+  hist->GetXaxis()->SetTitle("Energy [keV]");
+  hist->GetYaxis()->SetTitle("N");
+
   // InitialiseHistos();
   for (G4int i = 0; i < Nombre_IP; i++)
   {

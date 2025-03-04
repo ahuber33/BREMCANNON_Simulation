@@ -1,4 +1,4 @@
-# BREMCANON for Studies of CEDRIC's ENL Bremmsthralung cannon spectrometer. [huber@ecnbg.in2p3.fr, huberarnaud@gmail.com]
+# BREMCANNON for Studies of CEDRIC's ENL Bremmsthralung cannon spectrometer. [huber@lp2ib.in2p3.fr, huberarnaud@gmail.com]
 
 ## INSTRUCTIONS TO USE THE SIMULATION
 - Download the VMWare [Geant4.11.2.1](https://heberge.lp2ib.in2p3.fr/G4VM/index.html)
@@ -66,3 +66,16 @@ Coef_PSL 6.95e-4
 - Based on G4EmStandardPhysics_option3.
 
 - DO NOT HESITATE TO REPORT BUGS OR ANY IDEAS THAT WILL IMPROVE THE SIMULATION !!!!
+
+
+## BREMCANNON ANALYSE with CEDRIC 15 IPs CONFIGURATION (Mylar entrance). [huber@elp2ib.in2p3.fr, huberarnaud@gmail.com]
+
+## INSTRUCTIONS TO USE THE ANALYSYS CODE
+- If you already cloned all the BREMCANNON_Simulation files, you have already access to the ANALYSE_Config_15IP codes.
+
+- If you don't want to do some simulations but only use the Analysis code on Windows for example with Spyder, you need to follow these instructions :
+    - Go to : https://github.com/ahuber33/BREMCANNON_Simulation/
+    - Clik on the green block "<> Code"
+    - Download ZIP
+    - You can keep only the ANALYSE_Config_15_IP codes
+    - Go to README on this folder

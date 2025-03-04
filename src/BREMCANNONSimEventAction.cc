@@ -58,6 +58,6 @@ void BREMCANNONSimEventAction::EndOfEventAction(const G4Event* evt){
     Energie+=DepositE_Gamma_Stack[i];
   }
 
-    if(flag_good_event==true)
+    //if(flag_good_event==true)
     runac->UpdateStatistics(Statistics);
 }

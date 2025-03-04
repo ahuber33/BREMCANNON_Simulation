@@ -50,6 +50,7 @@ void BREMCANNONSimSteppingAction::UserSteppingAction(const G4Step *aStep)
   if (Parent_ID == 0 && StepNo == 1)
   {
     eventaction->SetIncidentE(aStep->GetPreStepPoint()->GetKineticEnergy() / keV);
+    runaction->FillIncidentHisto(aStep->GetPreStepPoint()->GetKineticEnergy() / keV);
   }
 
 

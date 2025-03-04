@@ -39,6 +39,7 @@ public:
   void SetHistoName(G4String name) {fname = name;}
   void SetStepParams(G4int m_ID,G4double m_Temps,G4String m_PartName);
   void InitialiseHistos();
+  void FillIncidentHisto(G4double e) {hist->Fill(e);}
 
   void AddElectronEnergy(G4int num_IP, G4double Edep) {E_dep_electrons[num_IP]+=Edep;}
   void AddGammaEnergy(G4int num_IP, G4double Edep) {E_dep_gammas[num_IP]+=Edep;}
@@ -69,6 +70,7 @@ private:
   TBranch *RunBranch;
   time_t start;
   time_t end;
+  TH1D* hist;
   G4String fname, nom_fichier;
   TH1D *HistoDistribElectrons[Nombre_IP];
   TH1D *HistoDistribGammas[Nombre_IP];
