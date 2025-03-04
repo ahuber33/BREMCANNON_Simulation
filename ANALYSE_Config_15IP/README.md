@@ -1,4 +1,4 @@
-# BREMCANNON ANALYSE with CEDRIC 15 IPs CONFIGURATION (Mylar entrance). [huber@elp2ib.in2p3.fr, huberarnaud@gmail.com]
+# BREMCANNON ANALYSE with CEDRIC 15 IPs CONFIGURATION (Mylar entrance). [huber@lp2ib.in2p3.fr, huberarnaud@gmail.com]
 
 ## INSTRUCTIONS TO USE THE ANALYSYS CODE
 - If you already cloned all the BREMCANNON_Simulation files, you have already access to the ANALYSE_Config_15IP codes.
