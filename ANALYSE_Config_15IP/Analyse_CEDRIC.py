@@ -38,8 +38,8 @@ import Include
 ############################################################
 ############### Define for user ############################
 ############################################################
-root_models = '/data/BREMCANNON_Simulation/ANALYSE_Config_15IP/'  #Important to change this PATH for your own use !!!!
-root_save = root_models + '/Save/'
+root_models = '/mnt/d/Simulations/BREMCANNON_Simulation/ANALYSE_Config_15IP/'  #Important to change this PATH for your own use !!!!
+root_save = root_models + 'Save/'
 keras.__version__
 
 # Charger les scalers
