@@ -33,7 +33,7 @@
 /gps/pos/centre 0.0 0.0 -300 mm
 /gps/direction 0.0 0.0 1.0
 /gps/pos/radius 25 mm
-#/gps/energy 20 keV
+#/gps/energy 90000 keV
 
 #/gps/particle geantino
 #/gps/pos/type Plane
@@ -51,8 +51,8 @@
 
 /gps/ene/type Exp
 /gps/ene/min 1. keV
-/gps/ene/max 5000. keV
-/gps/ene/ezero 0.5 MeV
+/gps/ene/max 500000. keV
+/gps/ene/ezero 2.5 MeV
 
 
 #/gps/ene/type Lin

@@ -42,7 +42,7 @@ void BREMCANNONSimRunAction::CreateROOTFile(G4String suffixe)
   // RunBranch = IP->Branch("EBremCreation", "vector<float>", &Stats.EBremCreation);
   // RunBranch = IP->Branch("EBremExit", "vector<float>", &Stats.EBremExit);
 
-  hist = new TH1D("incident_energy", "incident_energy", 500, 0, 5000);
+  hist = new TH1D("incident_energy", "incident_energy", 50000, 0, 500000);
   hist->GetXaxis()->SetTitle("Energy [keV]");
   hist->GetYaxis()->SetTitle("N");
 
@@ -216,5 +216,5 @@ void BREMCANNONSimRunAction::UpdateStatistics(RunTally aRunTally)
 {
   //G4AutoLock lock(&fileMutex); // Verrouillage automatique du mutex
   Stats = aRunTally;
-  IP->Fill();
+  //IP->Fill();
 }
