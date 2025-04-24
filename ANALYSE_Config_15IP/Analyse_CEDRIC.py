@@ -66,7 +66,7 @@ with open(root_models + 'gpy/' + 'Config_GSI2025.pkl', 'rb') as file:
 with open(root_models + 'rf/' + 'Config_GSI2025.pkl', 'rb') as file:
     rf_model = pickle.load(file)    
 
-nn_model = load_model(r"D:\PYTHON\Data_ML_extended\nn\Config_GSI2025.keras")
+nn_model = load_model(root_models + 'nn/' + 'Config_GSI2025.keras')
 
 
 ###########################################################
