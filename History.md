@@ -11,3 +11,8 @@
 - La nouvelle version avec ML se situe dans le dossier "ANALYSE_Config_15IP" car bien sur le Machine Learning effectué correspond à une version particulière de la configuration de CEDRIC utilisé. Si changement il doit y avoir, il faut refaire des données d'entrainements et de tests pour le ML. Un README spécifique à l'utilisation de l'analyse a été édité ainsi qu'un README concernant la mise en place du ML (TO DO)
 
 - Avant, déjà dans un soucis d'espace et de taille des fichiers, seuls les évènements ou il y avait eu une interaction avec CEDRIC était enregistré dans le fichier. Vu que ce n'est plus le cas, les spectres enregistrés sous forme d'histos correspondent à la stat totale simulée.
+
+## Commit #3 [BREMCANNONSim.0.1.1] le 24/04/2025
+- Modification de la géométrie de CEDRIC pour correspondre à la configuration exacte de l'expérience GSI 2025
+- Modification du code d'analyse afin de correspondre aux spectres détectés à GSI (plus hautes énergies, possible betattron à basses énergies)
+- Ajout de 2 autres modèles pour comparaisons et mise en place des incertitudes liées aux modèles.

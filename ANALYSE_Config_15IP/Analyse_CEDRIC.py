@@ -21,6 +21,8 @@ import sys
 import uproot  # Pour lire les fichiers ROOT sans PyROOT
 import awkward as ak  # uproot utilise awkward pour gérer les structures complexes
 import os
+# Définir la variable d'environnement pour désactiver oneDNN
+os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'
 from sklearn.metrics import auc, accuracy_score, confusion_matrix, mean_squared_error
 from scipy.stats.distributions import uniform, skewnorm
 import keras
@@ -38,19 +40,33 @@ import Include
 ############################################################
 ############### Define for user ############################
 ############################################################
-root_models = '/mnt/d/Simulations/BREMCANNON_Simulation/ANALYSE_Config_15IP/'  #Important to change this PATH for your own use !!!!
-root_save = root_models + 'Save/'
+root_models = 'D:/PYTHON/ANALYSE_Config_15IP/'  #Important to change this PATH for your own use !!!!
+root_save = root_models + '/Save/'       #Important to change this PATH for your own use !!!!
 keras.__version__
 
 # Charger les scalers
-with open(root_models + 'gpy/' + 'scaler_X.pkl', 'rb') as f:
-    scaler_X = pickle.load(f)
+with open(root_models + 'gpy/' + 'scaler_X_Config_GSI2025.pkl', 'rb') as f:
+    scaler_X_gpy = pickle.load(f)
+with open(root_models + 'nn/' + 'scaler_X_Config_GSI2025.pkl', 'rb') as f:
+    scaler_X_nn = pickle.load(f)
+with open(root_models + 'rf/' + 'scaler_X_Config_GSI2025.pkl', 'rb') as f:
+    scaler_X_rf = pickle.load(f)
 
-with open(root_models + 'gpy/' + 'scaler_Y.pkl', 'rb') as f:
-    scaler_y = pickle.load(f)
-    
-with open(root_models + 'gpy/' + 'best.pkl', 'rb') as f:
-    nn_model = pickle.load(f)    
+with open(root_models + 'gpy/' + 'scaler_Y_Config_GSI2025.pkl', 'rb') as f:
+    scaler_Y_gpy = pickle.load(f)
+with open(root_models + 'nn/' + 'scaler_Y_Config_GSI2025.pkl', 'rb') as f:
+    scaler_Y_nn = pickle.load(f)
+with open(root_models + 'rf/' + 'scaler_Y_Config_GSI2025.pkl', 'rb') as f:
+    scaler_Y_rf = pickle.load(f)
+
+with open(root_models + 'gpy/' + 'Config_GSI2025.pkl', 'rb') as file:
+#with open(root_models + 'gpy/' + 'best.pkl', 'rb') as file:
+    nn_model_gauss = pickle.load(file)
+
+with open(root_models + 'rf/' + 'Config_GSI2025.pkl', 'rb') as file:
+    rf_model = pickle.load(file)    
+
+nn_model = load_model(r"D:\PYTHON\Data_ML_extended\nn\Config_GSI2025.keras")
 
 
 ###########################################################
@@ -116,7 +132,7 @@ def on_save_button_click():
     root.destroy()  # Ferme la fenêtre après enregistrement
 
 # Ajouter un bouton pour enregistrer les résultats
-save_button = tk.Button(root, text="Proceed", command=on_save_button_click)
+save_button = tk.Button(root, text="Enregistrer", command=on_save_button_click)
 save_button.grid(row=n_rows+2, columnspan=n_cols*2, pady=10)
 
 # Lancer l'interface graphique
@@ -130,12 +146,83 @@ print(input_norm)
 Include.plot_histogram(input_norm)
 
 # Assurez-vous que input_norm est un tableau 1D et le transformer en tableau 2D
-input_data_scaled = scaler_X.transform(input_norm)
-# Faire des prédictions
-predictions = nn_model.predict(input_data_scaled)
-#print('Prédictions :', predictions)
-# Inverser la transformation
-original_predictions = Include.inverse_transform_predictions(scaler_y, predictions)
-#print('Prédictions :', original_predictions)
+# Transformer les inputs
+input_data_scaled_nn = scaler_X_nn.transform(input_norm)
+input_data_scaled_gpy = scaler_X_gpy.transform(input_norm)
+input_data_scaled_rf = scaler_X_rf.transform(input_norm)
 
-Include.plot_predictions(root_save, filename, original_predictions, integral)
+# Prédiction GP
+predictions_gauss, sigma_predictions_gauss = nn_model_gauss.predict(input_data_scaled_gpy, return_std=True)
+
+# Inverse scaling sur les prédictions GP (espace log10)
+predictions_gauss_log = Include.inverse_transform_predictions(scaler_Y_gpy, predictions_gauss)
+sigma_predictions_gauss_log = sigma_predictions_gauss * (scaler_Y_gpy.data_range_)
+
+# Retour espace physique
+original_predictions_gauss = 10 ** predictions_gauss_log
+
+# Gestion des incertitudes GP
+pred_upper_log = predictions_gauss_log + sigma_predictions_gauss_log
+pred_lower_log = predictions_gauss_log - sigma_predictions_gauss_log
+pred_upper = 10 ** pred_upper_log
+pred_lower = 10 ** pred_lower_log
+original_sigma_predictions_gauss = pred_upper - original_predictions_gauss
+
+# Prédiction MC Dropout
+# Supposons que nn_model est ton modèle entraîné
+nn_model_mc = Include.MCDropoutModel(nn_model)
+mean_pred, uncertainty_pred, all_simulations = Include.mc_dropout_predictions(
+    nn_model_mc, input_data_scaled_nn, n_simulations=100
+)
+
+# Appliquer l'inverse scaling dans l'espace log10
+simulations_log = np.array([
+    Include.inverse_transform_predictions(scaler_Y_nn, sim.reshape(1, -1)).squeeze()
+    for sim in all_simulations
+])
+
+# Retour à l’espace physique
+simulations_phys = 10 ** simulations_log
+original_predictions = np.mean(simulations_phys, axis=0)
+original_sigma_predictions = np.std(simulations_phys, axis=0)
+
+
+# Prédiction Random Forest
+# Récupération des prédictions de chaque arbre (dans l’espace standardisé log10)
+all_simulations_rf = np.array([
+    tree.predict(input_data_scaled_rf) for tree in rf_model.estimators_
+])  # shape: (n_trees, n_samples)
+
+# Appliquer l'inverse scaling dans l'espace log10
+simulations_log_rf = np.array([
+    Include.inverse_transform_predictions(scaler_Y_rf, sim.reshape(1, -1)).squeeze()
+    for sim in all_simulations_rf
+])  # shape: (n_trees, n_samples)
+
+# Retour à l’espace physique (undo log10)
+simulations_phys_rf = 10 ** simulations_log_rf  # shape: (n_trees, n_samples)
+
+# Moyenne et écart-type dans l’espace physique
+original_predictions_rf = np.mean(simulations_phys_rf, axis=0)
+original_sigma_predictions_rf = np.std(simulations_phys_rf, axis=0)
+
+# (Optionnel) calcul des bornes à ±1σ si tu veux les tracer
+pred_upper_rf = original_predictions_rf + original_sigma_predictions_rf
+pred_lower_rf = original_predictions_rf - original_sigma_predictions_rf
+
+
+original_sigma_predictions_rf = pred_upper_rf - original_predictions_rf
+
+#print(original_sigma_predictions)
+#print(original_sigma_predictions_rf)
+
+
+Include.plot_predictions(root_save,
+                         filename,
+                         original_predictions_gauss,
+                         original_sigma_predictions_gauss,
+                         original_predictions,
+                         original_sigma_predictions,
+                         original_predictions_rf,
+                         original_sigma_predictions_rf,
+                         integral)

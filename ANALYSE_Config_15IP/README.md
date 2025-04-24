@@ -19,14 +19,28 @@ root_save = root_models + '/Save/'
 keras.__version__
 
 # Charger les scalers
-with open(root_models + 'gpy/' + 'scaler_X.pkl', 'rb') as f:
-    scaler_X = pickle.load(f)
+with open(root_models + 'gpy/' + 'scaler_X_Config_GSI2025.pkl', 'rb') as f:
+    scaler_X_gpy = pickle.load(f)
+with open(root_models + 'nn/' + 'scaler_X_Config_GSI2025.pkl', 'rb') as f:
+    scaler_X_nn = pickle.load(f)
+with open(root_models + 'rf/' + 'scaler_X_Config_GSI2025.pkl', 'rb') as f:
+    scaler_X_rf = pickle.load(f)
 
-with open(root_models + 'gpy/' + 'scaler_Y.pkl', 'rb') as f:
-    scaler_y = pickle.load(f)
-    
-with open(root_models + 'gpy/' + 'best.pkl', 'rb') as f:
-    nn_model = pickle.load(f)    
+with open(root_models + 'gpy/' + 'scaler_Y_Config_GSI2025.pkl', 'rb') as f:
+    scaler_Y_gpy = pickle.load(f)
+with open(root_models + 'nn/' + 'scaler_Y_Config_GSI2025.pkl', 'rb') as f:
+    scaler_Y_nn = pickle.load(f)
+with open(root_models + 'rf/' + 'scaler_Y_Config_GSI2025.pkl', 'rb') as f:
+    scaler_Y_rf = pickle.load(f)
+
+with open(root_models + 'gpy/' + 'Config_GSI2025.pkl', 'rb') as file:
+#with open(root_models + 'gpy/' + 'best.pkl', 'rb') as file:
+    nn_model_gauss = pickle.load(file)
+
+with open(root_models + 'rf/' + 'Config_GSI2025.pkl', 'rb') as file:
+    rf_model = pickle.load(file)    
+
+nn_model = load_model(r"D:\PYTHON\Data_ML_extended\nn\Config_GSI2025.keras")
 
 
 ###########################################################
