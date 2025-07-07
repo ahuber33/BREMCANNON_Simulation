@@ -16,3 +16,6 @@
 - Modification de la géométrie de CEDRIC pour correspondre à la configuration exacte de l'expérience GSI 2025
 - Modification du code d'analyse afin de correspondre aux spectres détectés à GSI (plus hautes énergies, possible betattron à basses énergies)
 - Ajout de 2 autres modèles pour comparaisons et mise en place des incertitudes liées aux modèles.
+
+## Commit #4 [BREMCANNONSim.0.1.2] le 07/07/2025
+- MAJ Analyse CEDRIC 15 IP

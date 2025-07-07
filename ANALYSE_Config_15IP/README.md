@@ -14,33 +14,10 @@
 ############################################################
 ############### Define for user ############################
 ############################################################
-root_models = 'D:/PYTHON/ANALYSE_Config_15IP/'  #Important to change this PATH for your own use !!!!
-root_save = root_models + '/Save/'
-keras.__version__
-
-# Charger les scalers
-with open(root_models + 'gpy/' + 'scaler_X_Config_GSI2025.pkl', 'rb') as f:
-    scaler_X_gpy = pickle.load(f)
-with open(root_models + 'nn/' + 'scaler_X_Config_GSI2025.pkl', 'rb') as f:
-    scaler_X_nn = pickle.load(f)
-with open(root_models + 'rf/' + 'scaler_X_Config_GSI2025.pkl', 'rb') as f:
-    scaler_X_rf = pickle.load(f)
-
-with open(root_models + 'gpy/' + 'scaler_Y_Config_GSI2025.pkl', 'rb') as f:
-    scaler_Y_gpy = pickle.load(f)
-with open(root_models + 'nn/' + 'scaler_Y_Config_GSI2025.pkl', 'rb') as f:
-    scaler_Y_nn = pickle.load(f)
-with open(root_models + 'rf/' + 'scaler_Y_Config_GSI2025.pkl', 'rb') as f:
-    scaler_Y_rf = pickle.load(f)
-
-with open(root_models + 'gpy/' + 'Config_GSI2025.pkl', 'rb') as file:
-#with open(root_models + 'gpy/' + 'best.pkl', 'rb') as file:
-    nn_model_gauss = pickle.load(file)
-
-with open(root_models + 'rf/' + 'Config_GSI2025.pkl', 'rb') as file:
-    rf_model = pickle.load(file)    
-
-nn_model = load_model(r"D:\PYTHON\Data_ML_extended\nn\Config_GSI2025.keras")
+##### Define for user #####
+root_models = 'D:/Simulations/BREMCANNON_Simulation/ANALYSE_Config_15IP/'
+root_save = root_models + '/Save/'       #Important to change this PATH for your own use !!!!
+filename = "Shot_test"
 
 
 ###########################################################
@@ -73,12 +50,25 @@ python3 Analyse_CEDRIC.py
 
 - If you choose another environment like SPYDER, according to your version, maybe you will need also to download the previous modules or others. Use the same method on a terminal (pip install ...). After that, you will be able to run it.
 
-- A graphical window will pop up in order, for users, to put the informations (Name of file & PSL/mm² for each IP).
+- The code will look at the "Shot_test.txt" file which have the following structure :
+    - Metadata
+    - PSL/mm² IP1
+    - PSL/mm² IP2
+    - ...
 
-- When it's good, click on the button "Proceed" to use the reconstruction made by the Machine Learning process.
+- From this IP spectrum, the code will try to reconstruct an incident spectrum 
+    - from ML reconstruction
+        - Gaussian Process trained with ONLY Exponentials (31)
+        - Gaussian Process trained on different structures (35)
+        - Random Forrest trained with ONLY Exponentials (31)
+        - Random Forrest trained on different structures (35)
+    - from Minuit Fit with 1 or 2 temperatures
 
-- You will obtain a plot corresponding to the estimated gamma spectrum incident on the solid angle of the CEDRIC detector. This plot will be automatically save with the filename given in the graphical interface in the Save folder
-
-- If you are on the GEANT4 VM, you need to close the first plot (PSL/IP) to have the reconstructed spectrum.
+- At the end, you will obtain on the SAVE folder :
+    - Best configuration determined for the ML
+    - Other results from ML
+    - Superposition of all ML reconstruction
+    - Comparison of IP spectrum from 1 & 2 temperatures with Data
+    - Comparison of Incident spectrum obtained with ML Best, 1 & 2 Temperature Fit
 
 - For more informations about the ML process, look at the README file locatedin the ML folder.
