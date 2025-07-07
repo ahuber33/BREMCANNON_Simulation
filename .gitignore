@@ -63,6 +63,10 @@ _deps
 *.pcm
 *.root
 
+RF_Model_31scaled.pkl
+RF_Model_35scaled.pkl
+GP_Model_31scaled.pkl
+GP_Model_35scaled.pkl
 
 
 # End of https://www.toptal.com/developers/gitignore/api/cmake,c++,root
