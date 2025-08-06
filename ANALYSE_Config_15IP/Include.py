@@ -765,7 +765,7 @@ def Estimation_Best_ML(path, filename, metadata,
     gp_31 = False
     gp_35 = False
     
-    if var_rf_31 <8 :
+    if var_rf_31 <7 :
         rf_31 =True
     
     if var_rf_35 <25 :
@@ -923,9 +923,9 @@ def Fit_Minuit(spectre_best, spectre_IP, sigma_spectre_IP):
     # Ajustement à deux températures
     m_dual = Minuit(dual_chi2_fixed, A0=m_single.values["A"], E01=m_single.values["E0"], A1=0.5, E02=10000.0)
     m_dual.limits["A0"] = (np.max(spectre_best)*1e-6, np.max(spectre_best)*1e6)
-    m_dual.limits["E01"] = (0.1, 500)
+    m_dual.limits["E01"] = (0.1, 1000)
     m_dual.limits["A1"] = (1e-1, 1)
-    m_dual.limits["E02"] = (500, 100000)
+    m_dual.limits["E02"] = (1000, 500000)
     m_dual.migrad()
     print("\nDual Temperature Fit:")
     print("Best parameters:", m_dual.values)

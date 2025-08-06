@@ -6,42 +6,65 @@
 
 using namespace CLHEP;
 
-BREMCANNONSimPhysics::BREMCANNONSimPhysics():  G4VModularPhysicsList()
+// Taken from N06 and LXe examples in GEANT4
+
+BREMCANNONSimPhysics::BREMCANNONSimPhysics()// : G4VModularPhysicsList()
 {
-  //defaultCutValue = 0.001*mm; //0.001
-  defaultCutValue = 0.1*mm; //0.001
-  //was 0.5*mm
 
-  SetVerboseLevel(1);
 
-  //default physics
-  particleList = new G4DecayPhysics();
-
-  //default physics
-  raddecayList = new G4RadioactiveDecayPhysics();
-
+  G4int verb = 1;
+  SetVerboseLevel(verb);
+  
+  // mandatory for G4NuclideTable
+  //
+  const G4double meanLife = 1*nanosecond, halfLife = meanLife*std::log(2);
+  G4NuclideTable::GetInstance()->SetThresholdOfHalfLife(halfLife);
+     
+  // Hadron Elastic scattering
+  //RegisterPhysics( new G4HadronElasticPhysicsXS(verb) );  
+  RegisterPhysics( new G4HadronElasticPhysicsHP(verb) );
+  
+  // Hadron Inelastic Physics
+  //RegisterPhysics( new G4HadronPhysicsFTFP_BERT(verb));
+  ////RegisterPhysics( new G4HadronPhysicsQGSP_BIC(verb));
+  RegisterPhysics( new G4HadronPhysicsQGSP_BIC_HP(verb));
+  ////RegisterPhysics( new G4HadronPhysicsQGSP_BIC_AllHP(verb));
+  ////RegisterPhysics( new G4HadronInelasticQBBC(verb));
+  ////RegisterPhysics( new G4HadronPhysicsINCLXX(verb));
+  
+  // Ion Elastic scattering
+  //
+  RegisterPhysics( new G4IonElasticPhysics(verb));
+  
+  // Ion Inelastic physics
+  RegisterPhysics( new G4IonPhysicsXS(verb));
+  ////RegisterPhysics( new G4IonINCLXXPhysics(verb));
+  
+  // stopping Particles
+  RegisterPhysics( new G4StoppingPhysics(verb));
+      
+  // Gamma-Nuclear Physics
+  //RegisterPhysics( new GammaNuclearPhysics("gamma"));
+  ////RegisterPhysics( new GammaNuclearPhysicsLEND("gamma"));
+  RegisterPhysics( new G4EmExtraPhysics());
+      
   // EM physics
-  emPhysicsList = new G4EmStandardPhysics_option3();
+  //RegisterPhysics(new ElectromagneticPhysics());
+  RegisterPhysics(new G4EmStandardPhysics_option3());
+  
+  // Decay
+  RegisterPhysics(new G4DecayPhysics());
+
+  // Radioactive decay
+  //RegisterPhysics(new RadioactiveDecayPhysics());
+  RegisterPhysics(new G4RadioactiveDecayPhysics());  
+
+
 }
 
-BREMCANNONSimPhysics::~BREMCANNONSimPhysics(){
-  delete raddecayList;
-  delete emPhysicsList;
-}
+BREMCANNONSimPhysics::~BREMCANNONSimPhysics()
+{}
 
-void BREMCANNONSimPhysics::ConstructParticle()
-{
-  // Here are constructed all particles you have chosen
-  particleList->ConstructParticle();
-}
-
-void BREMCANNONSimPhysics::ConstructProcess()
-{
-  AddTransportation();
-  emPhysicsList->ConstructProcess();
-  particleList->ConstructProcess();
-  raddecayList->ConstructProcess();
-}
 
 void BREMCANNONSimPhysics::SetCuts()
 {

@@ -17,9 +17,9 @@ You will find :
 - RF_model_35scaled.pkl
 with this link : https://sdrive.cnrs.fr/s/TJfikzYww39AosP  (Link avalaible until 31/12/2025)
 
-You need to put these files on gpy folder (for GP model) and rf foled (for RF model) !!!!    
+You need to put these files on gpy folder (for GP model) and rf folder (for RF model) !!!!    
 
-- Concerning the Analyssis code, first of all, you need to modify the "root_models" PATH in the "Analyse_CEDRIC.py" file acccording to your installation (example below)
+- Concerning the Analysis code, first of all, you need to modify the "root_models" PATH in the "Analyse_CEDRIC.py" file acccording to your installation (example below)
 ```
 ############################################################
 ############### Define for user ############################
