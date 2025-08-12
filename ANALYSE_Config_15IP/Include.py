@@ -318,9 +318,8 @@ def inverse_transform_predictions(scaler_y, predictions):
 ##############################################################################################    
 ##############################################################################################    
 
-def ML_Estimation_GP(gp_model, scaler_X, scaler_Y, spectre_IP) :
-    # Recharger les données d'origine (ou juste les colonnes)
-    df1 = pd.read_pickle('D:/PYTHON/test_1.pickle')
+def ML_Estimation_GP(path, gp_model, scaler_X, scaler_Y, spectre_IP) :
+    df1 = pd.read_pickle(path + 'scalers/Dummy.pickle')
     
     # Refaire la sélection des colonnes features
     x = df1[["PSL_IP_1", "PSL_IP_2", "PSL_IP_3", "PSL_IP_4", "PSL_IP_5",
@@ -373,9 +372,8 @@ def ML_Estimation_GP(gp_model, scaler_X, scaler_Y, spectre_IP) :
 ##############################################################################################    
 ##############################################################################################    
 
-def ML_Estimation_RF(rf_model, scaler_X, scaler_Y, spectre_IP) :
-    # Recharger les données d'origine (ou juste les colonnes)
-    df1 = pd.read_pickle('D:/PYTHON/test_1.pickle')
+def ML_Estimation_RF(path, rf_model, scaler_X, scaler_Y, spectre_IP) :
+    df1 = pd.read_pickle(path + 'scalers/Dummy.pickle')
     
     # Refaire la sélection des colonnes features
     x = df1[["PSL_IP_1", "PSL_IP_2", "PSL_IP_3", "PSL_IP_4", "PSL_IP_5",
@@ -679,12 +677,12 @@ def Load_ShotFile(path, filename):
 ##############################################################################################    
 ##############################################################################################    
 
-def Estimation_Best_ML(centres_uniforme):
-    rf_predi_31, rf_sigma_predi_31, var_rf_31 = ML_Estimation_RF(rf_model_31, scaler_X_31, scaler_Y_31, spectre_IP)
-    rf_predi_35, rf_sigma_predi_35, var_rf_35 = ML_Estimation_RF(rf_model_35, scaler_X_35, scaler_Y_35, spectre_IP)
+def Estimation_Best_ML(path, centres_uniforme):
+    rf_predi_31, rf_sigma_predi_31, var_rf_31 = ML_Estimation_RF(path, rf_model_31, scaler_X_31, scaler_Y_31, spectre_IP)
+    rf_predi_35, rf_sigma_predi_35, var_rf_35 = ML_Estimation_RF(path, rf_model_35, scaler_X_35, scaler_Y_35, spectre_IP)
     
-    gp_predi_31, gp_sigma_predi_31, var_gp_31 = ML_Estimation_GP(gp_model_31, scaler_X_31, scaler_Y_31, spectre_IP)
-    gp_predi_35, gp_sigma_predi_35, var_gp_35 = ML_Estimation_GP(gp_model_35, scaler_X_35, scaler_Y_35, spectre_IP)
+    gp_predi_31, gp_sigma_predi_31, var_gp_31 = ML_Estimation_GP(path, gp_model_31, scaler_X_31, scaler_Y_31, spectre_IP)
+    gp_predi_35, gp_sigma_predi_35, var_gp_35 = ML_Estimation_GP(path, gp_model_35, scaler_X_35, scaler_Y_35, spectre_IP)
     
     rf_31 = False
     rf_35 = False

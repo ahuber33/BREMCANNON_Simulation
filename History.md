@@ -28,3 +28,8 @@
     - Nettoyage
     - Incorpation des incertitudes
     - Ajout méthode Perturbative Minimization Algo (https://pubs.aip.org/aip/rsi/article/95/2/023301/3262492/Robust-unfolding-of-MeV-x-ray-spectra-from-filter)
+
+## Commit #6 [BREMCANNONSim.0.2.2] le 12/08/2025
+- Analyse CEDRIC 15 IP :
+    - Ajout fichier Dummy pour lecture format fichier ML
+    - Corrections/Modifications fonction liées au ML avec ajout du PATH pour accéder à Dummy
