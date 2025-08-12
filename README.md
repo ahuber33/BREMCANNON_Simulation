@@ -79,3 +79,13 @@ Coef_PSL 6.95e-4
     - Download ZIP
     - You can keep only the ANALYSE_Config_15_IP codes
     - Go to README on this folder
+
+For the Analysis, IN ADDITION; you need to download some pickle files (too big to be uploaded on GIT).
+
+You will find :
+- GP_model_31scaled.pkl
+- GP_model_35scaled.pkl
+- RF_model_31scaled.pkl
+- RF_model_35scaled.pkl
+
+with this link : https://sdrive.cnrs.fr/s/TJfikzYww39AosP  (Link avalaible until 31/12/2025)

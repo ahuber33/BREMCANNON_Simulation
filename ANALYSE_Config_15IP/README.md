@@ -8,6 +8,19 @@
     - Clik on the green block "<> Code"
     - Download ZIP
     - You can keep only the ANALYSE_Config_15_IP codes
+
+
+For the Analysis, IN ADDITION; you need to download some pickle files (too big to be uploaded on GIT).
+
+You will find :
+- GP_model_31scaled.pkl
+- GP_model_35scaled.pkl
+- RF_model_31scaled.pkl
+- RF_model_35scaled.pkl
+
+with this link : https://sdrive.cnrs.fr/s/TJfikzYww39AosP  (Link avalaible until 31/12/2025)
+
+You need to put these files on gpy folder (for GP model) and rf folder (for RF model) !!!!      
  
 
 - Concerning the Analysis code, first of all, you need to modify the "root_models" PATH in the "Analyse_CEDRIC.py" file acccording to your installation (example below)
