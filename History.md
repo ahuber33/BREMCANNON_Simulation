@@ -22,3 +22,9 @@
 
 ## Commit #4 [BREMCANNONSim.0.2.0] le 06/08/2025
 - Ajout High Energy Physics (neutron et photoNuclearProcess) en rapport avec l'expérience de Medhi à GSI ayant eu des rayonnements allant pouvant aller au delà de 100 MeV
+
+## Commit #5 [BREMCANNONSim.0.2.1] le 12/08/2025
+- MAJ Analyse CEDRIC 15 IP
+    - Nettoyage
+    - Incorpation des incertitudes
+    - Ajout méthode Perturbative Minimization Algo (https://pubs.aip.org/aip/rsi/article/95/2/023301/3262492/Robust-unfolding-of-MeV-x-ray-spectra-from-filter)

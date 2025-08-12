@@ -8,16 +8,7 @@
     - Clik on the green block "<> Code"
     - Download ZIP
     - You can keep only the ANALYSE_Config_15_IP codes
-
-For the Analysis, IN ADDITION; you need to download some pickle files (too big to be uploaded on GIT).
-You will find :
-- GP_model_31scaled.pkl
-- GP_model_35scaled.pkl
-- RF_model_31scaled.pkl
-- RF_model_35scaled.pkl
-with this link : https://sdrive.cnrs.fr/s/TJfikzYww39AosP  (Link avalaible until 31/12/2025)
-
-You need to put these files on gpy folder (for GP model) and rf folder (for RF model) !!!!    
+ 
 
 - Concerning the Analysis code, first of all, you need to modify the "root_models" PATH in the "Analyse_CEDRIC.py" file acccording to your installation (example below)
 ```
@@ -66,6 +57,8 @@ python3 Analyse_CEDRIC.py
     - PSL/mm² IP2
     - ...
 
+- An uncertainty of 10% is applied for the Data !!!! 
+
 - From this IP spectrum, the code will try to reconstruct an incident spectrum 
     - from ML reconstruction
         - Gaussian Process trained with ONLY Exponentials (31)
@@ -73,12 +66,16 @@ python3 Analyse_CEDRIC.py
         - Random Forrest trained with ONLY Exponentials (31)
         - Random Forrest trained on different structures (35)
     - from Minuit Fit with 1 or 2 temperatures
+    - from Perturbative Minimization Algo PMA (https://pubs.aip.org/aip/rsi/article/95/2/023301/3262492/Robust-unfolding-of-MeV-x-ray-spectra-from-filter)
+        - from ML best spectrum
+        - from 2T Fit
+        - from Uniform spectrum (Scratch)
 
 - At the end, you will obtain on the SAVE folder :
     - Best configuration determined for the ML
     - Other results from ML
     - Superposition of all ML reconstruction
-    - Comparison of IP spectrum from 1 & 2 temperatures with Data
-    - Comparison of Incident spectrum obtained with ML Best, 1 & 2 Temperature Fit
+    - Comparison of IP spectrums (ML, Fit, PMA) with Data with Chi2 values
+    - Comparison of Incident spectrum (ML, Fit, PMA) 
 
 - For more informations about the ML process, look at the README file locatedin the ML folder.
